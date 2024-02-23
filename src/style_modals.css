@@ -1,0 +1,43 @@
+#modal_crear_nombre{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(56, 56, 56, 0.568); 
+}
+
+#modal_contenido{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 15px; 
+    width: 70%;
+}
+
+.subtitle{
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+    height: 30px;
+}
+
+
+th {
+    background-color: #f2f2f2;
+}

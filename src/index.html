@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_modals.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="header_title">Time Table Calculator</h1>
+    </header>
+    <div id="main_panel">
+        <div id="not_selected_subjects">
+            <div id="create_subject_button_div">
+                <button onclick="show_create_subject()" id="create_subject_button">Create Subject</button>
+            </div>
+            <div class="subject">
+                <label class="subject_name">AM1</label>
+                <div class="button_div">
+                    <button class="subject_button">Add</button>
+                    <button class="subject_button">Edit</button>
+                    <button class="subject_button">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div id="divider"></div>
+        <div id="selected_subjects"></div>
+    </div>
+    
+    <div id="modal_crear_nombre">
+        <div id="modal_contenido">
+            <label class="subtitle">Escriba un nombre</label>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miercoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
