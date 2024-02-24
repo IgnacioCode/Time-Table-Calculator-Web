@@ -5,8 +5,8 @@ class Turno{
         this.horario=horario
     }
 
-    equals(otro_turno){
-        if(this.dia == otro_turno.dia && this.horario == otro_turno.horario){
+    static igualTurno(turno1,turno2){
+        if(turno1.dia == turno2.dia && turno1.horario == turno2.horario){
             return true
         }
         return false
@@ -19,14 +19,16 @@ class Comision{
     }
 
     static isComisionCompatible(comision_1,comision_2){
-        comision_1.turnos.forEach(turno_1 => {
-            comision_2.turnos.forEach(turno_2 =>{
-                if(turno_1.equals(turno_2)){
-                    return false
+        var flag = true
+        
+        for(var i = 0;i<comision_1.turnos.length;i++){
+            for(var j = 0;j<comision_2.turnos.length;j++){
+                if(Turno.igualTurno(comision_1.turnos[i],comision_2.turnos[j])){
+                    flag=false
                 }
-            })
-        })
-        return true
+            }
+        }
+        return flag
     }
 }
 
@@ -45,33 +47,87 @@ class Horario{
     }
 
     isHorarioCompatible(){
-        this.comisiones.forEach(comision=>{
-            this.comisiones.forEach(comision2=>{
-                if(comision!=comision2 && !Comision.isComisionCompatible(comision,comision2)){
-                    return false
+        var flag = true
+        for(var i=0;i<this.comisiones.length;i++){
+            for(var j=i+1;j<this.comisiones.length;j++){
+                if(Comision.isComisionCompatible(this.comisiones[i],this.comisiones[j]) == false){
+                    flag =  false
                 }
-            })
-        })
+            }
+        }
 
-        return true
+        return flag
     }
 
     static calculateHorariosCompatibles(materias){
+        var combinaciones_posibles = 1
+        var horarios_compatibles = []
+        var cant_comisiones = []
+        var nombres_materias = []
         materias.forEach(materia=>{
-
+            combinaciones_posibles *= materia.comisiones.length
+            cant_comisiones.push(materia.comisiones.length)
+            nombres_materias.push(materia.nombre)
         })
+
+        var anillo = new Anillo(cant_comisiones)
+        var comisiones_a_probar = []
+
+        for(var i = 0;i<combinaciones_posibles;i++){
+            for(var j=0;j<materias.length;j++){
+                comisiones_a_probar.push(materias[j].comisiones[anillo.values[j]])
+            }
+
+            var horario_a_probar = new Horario(nombres_materias,comisiones_a_probar)
+            if(horario_a_probar.isHorarioCompatible() == true){
+                horarios_compatibles.push(horario_a_probar)
+            }
+            
+            comisiones_a_probar = []
+            anillo.turn()
+        }
+
+        console.log(horarios_compatibles);
+
+        return horarios_compatibles
+
+    }
+}
+
+class Anillo{
+    constructor(modulos){
+        this.modulos = modulos
+        this.values = []
+        modulos.forEach(valor=>{this.values.push(0)})
+    }
+
+    turn(){
+        var i = 0
+        for(i = 0;i<this.modulos.length;i++){
+            this.values[i] = (this.values[i]+1)%this.modulos[i]
+            if(this.values[i]!=0){
+                break;
+            }
+        }
     }
 }
 
 modal_comisiones = document.getElementById("modal_crear_comisiones")
 modal_nombre = document.getElementById("modal_crear_nombre")
+moda_res = document.getElementById("modal_resultados")
 tabla = document.getElementById("sections_table")
 datos_tabla = document.getElementById("datos")
-
 input_nombre = document.getElementById("new_subject_name_input")
+label_num_pag = document.getElementById("label_num_pag")
+
+tabla_res_1 = document.getElementById("tabla_res_1")
+tabla_res_2 = document.getElementById("tabla_res_2")
+tabla_res_3 = document.getElementById("tabla_res_3")
+tabla_res_4 = document.getElementById("tabla_res_4")
 
 nombre_nueva_materia = ""
-
+horarios_calculados = []
+pagina_actual = 1
 
 function create_subject(){
     modal = document.getElementById("modal_crear_comisiones")
@@ -163,24 +219,24 @@ function update_subject_lists(nombre_materia){
         boton_add.className="subject_button"
         if(materia.isWaiting){
             boton_add.onclick = () =>{ addToSelected(materia.nombre)}
-            boton_add.innerText="Add"
+            boton_add.innerText="Añadir"
         }
         else{
             boton_add.onclick = () =>{ removeSelected(materia.nombre)}
-            boton_add.innerText="Remove"
+            boton_add.innerText="Quitar"
         }
         
         nuevos_botones.appendChild(boton_add)
 
         boton_edit = document.createElement("button")
         boton_edit.className="subject_button"
-        boton_edit.innerText="Edit"
+        boton_edit.innerText="Editar"
         boton_edit.onclick = () =>{ editSubject(materia.nombre)}
         nuevos_botones.appendChild(boton_edit)
 
         boton_delete = document.createElement("button")
         boton_delete.className="subject_button"
-        boton_delete.innerText="Delete"
+        boton_delete.innerText="Borrar"
         boton_delete.onclick = () =>{ deleteSubject(materia.nombre)}
         nuevos_botones.appendChild(boton_delete)
 
@@ -358,16 +414,126 @@ function deleteSubject(nombre){
 }
 
 function calculate_timetable(){
+    modal_res = document.getElementById("modal_resultados")
+
     lista_materias = JSON.parse(localStorage.getItem('subjects.json'))
     materias_seleccionadas = []
     lista_materias.forEach(materia=>{
-        if(materia.isWaiting=false){
+        if(materia.isWaiting==false){
             materias_seleccionadas.push(materia)
         }
     })
 
+    
     horarios_compatibles = Horario.calculateHorariosCompatibles(materias_seleccionadas)
+    horarios_calculados = horarios_compatibles
+    modal_res.style.display="flex";
 
+    pagina_actual = 0
+    paginas_totales = Math.ceil(horarios_compatibles.length / 4);
+    label_num_pag.textContent = "Pagina " + (pagina_actual+1) + " de " + paginas_totales
+
+    if(horarios_compatibles[0]!=null){
+        clean_res_table(tabla_res_1)
+        completa_tabla(tabla_res_1,horarios_compatibles[0])
+    }
+    if(horarios_compatibles[1]!=null){
+        clean_res_table(tabla_res_2)
+        completa_tabla(tabla_res_2,horarios_compatibles[1])
+    }
+    if(horarios_compatibles[2]!=null){
+        clean_res_table(tabla_res_3)
+        completa_tabla(tabla_res_3,horarios_compatibles[2])
+    }
+    if(horarios_compatibles[3]!=null){
+        clean_res_table(tabla_res_4)
+        completa_tabla(tabla_res_4 ,horarios_compatibles[3])
+    }
+}
+
+function completa_tabla(tabla,horario){
+    
+    filas = tabla.getElementsByTagName("tr")
+    for(i=0;i<filas.length;i++){
+        fila = filas[i].getElementsByTagName("td")
+        for(j=0;j<fila.length;j++){
+            celda = fila[j]
+            label = celda.getElementsByTagName("label")
+            if(label[0]!=null){
+                label[0].textContent = ""
+            }
+            
+        }
+    }
+
+    filas = tabla.getElementsByTagName("tr")
+    celdas=[]
+    for(i=0;i<filas.length;i++){
+        celdas.push(filas[i].getElementsByTagName("td"))
+    }
+
+
+    //  HORARIO  
+    //celdas[1][2].getElementsByTagName("label")[0].textContent = "AAA1"
+    //       DIA   
+
+    for(i=0;i<horario.comisiones.length;i++){
+        comision_actual = horario.comisiones[i]
+        for(j=0;j<comision_actual.turnos.length;j++){
+            celdas[comision_actual.turnos[j].horario][comision_actual.turnos[j].dia].getElementsByTagName("label")[0].textContent = horario.materias_nombres[i]
+        }
+        
+    }
+
+
+}
+
+function back_page(){
+    if(pagina_actual>0){
+        pagina_actual-=2
+        next_page()
+    }
+}
+
+function next_page(){
+
+    if(pagina_actual<paginas_totales){
+        pagina_actual++
+    }
+    
+    clean_res_table(tabla_res_1)
+    if(horarios_compatibles[pagina_actual*4]!=null){
+        completa_tabla(tabla_res_1,horarios_compatibles[pagina_actual*4])
+    }
+    clean_res_table(tabla_res_2)
+    if(horarios_compatibles[pagina_actual*4+1]!=null){
+        completa_tabla(tabla_res_2,horarios_compatibles[pagina_actual*4+1])
+    }
+    clean_res_table(tabla_res_3)
+    if(horarios_compatibles[pagina_actual*4+2]!=null){
+        completa_tabla(tabla_res_3,horarios_compatibles[pagina_actual*4+2])
+    }
+    clean_res_table(tabla_res_4)
+    if(horarios_compatibles[pagina_actual*4+3]!=null){
+        completa_tabla(tabla_res_4 ,horarios_compatibles[pagina_actual*4+3])
+    }
+
+    label_num_pag.textContent = "Pagina " + (pagina_actual+1) + " de " + paginas_totales
+}
+
+function clean_res_table(tabla){
+    filas = tabla.getElementsByTagName("tr")
+    for(i=0;i<filas.length;i++){
+        fila = filas[i].getElementsByTagName("td")
+        for(j=0;j<fila.length;j++){
+            celda = fila[j]
+            label = celda.getElementsByTagName("label")
+            if(label[0]!=null){
+                label[0].textContent = ""
+            }
+            
+        }
+    }
 }
 
 function show_create_subject(){
@@ -415,6 +581,9 @@ window.onclick = function(event) {
     }
     else if (event.target == modal_comisiones) {
         modal_comisiones.style.display = "none";
+    }
+    else if(event.target == moda_res){
+        modal_res.style.display = "none"
     }
   }
 

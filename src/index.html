@@ -18,8 +18,8 @@
     </header>
     <div id="main_panel">
         <div id="create_subject_button_div" style="display: flex; justify-content: space-between; width: 100%; margin-top: 25px; margin-left: 20px; margin-right: 20px;">
-            <button onclick="show_create_subject()" class="top_ui_button" id="create_subject_button">Create Subject</button>
-            <button onclick="calculate_timetable()" class="top_ui_button" id="calculate_timetable">Calculate</button>
+            <button onclick="show_create_subject()" class="top_ui_button" id="create_subject_button">Crear Materia</button>
+            <button onclick="calculate_timetable()" class="top_ui_button" id="calculate_timetable">Calcular</button>
         </div>
         <div id="not_selected_subjects"></div>
         <div id="divider"></div>
@@ -27,26 +27,29 @@
     </div>
     
     <div class="modal" id="modal_crear_comisiones">
-        <div id="modal_contenido">
-            <label class="subtitle">Sections</label>
-            <p>Write the section number on each slot for each different section for this subject. If there's more than one section in one slot, separate them with ","</p>
+        <div class="modal_contenido">
+            <label class="subtitle">Comisiones</label>
+            <p>Escriba los numeros de comision en los casilleros segun corresponda. 
+                Por ejemplo, si una comision es lunes y martes en la mañana, escribiria 
+                "1" en ambas casillas. Si hay mas de 1 comision en un mismo horario, 
+                separe los numeros con "," quedando  tal que asi "1,2,3"</p>
             <div style="width: 100%;">  
                 <div class="week_table">
                     <table class="sections_table">
                         <thead>
                             <tr>
-                                <th>Time</th>
-                                <th>Monday</th>
-                                <th>Tuesday</th>
-                                <th>Wednesday</th>
-                                <th>Thursday</th>
-                                <th>Friday</th>
-                                <th>Saturday</th>
+                                <th>Horario</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miercoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>Sabado</th>
                             </tr>
                         </thead>
                         <tbody id="datos">
                             <tr turno="0">
-                                <td>Morning</td>
+                                <td>Mañana</td>
                                 <td dia="1"><input type="text"></td>
                                 <td dia="2"><input type="text"></td>
                                 <td dia="3"><input type="text"></td>
@@ -55,7 +58,7 @@
                                 <td dia="6"><input type="text"></td>
                             </tr>
                             <tr turno="1">
-                                <td>Afternoon</td>
+                                <td>Tarde</td>
                                 <td dia="1"><input type="text"></td>
                                 <td dia="2"><input type="text"></td>
                                 <td dia="3"><input type="text"></td>
@@ -64,7 +67,7 @@
                                 <td dia="6"><input type="text"></td>
                             </tr>
                             <tr turno="2">
-                                <td>Evening</td>
+                                <td>Noche</td>
                                 <td dia="1"><input type="text"></td>
                                 <td dia="2"><input type="text"></td>
                                 <td dia="3"><input type="text"></td>
@@ -77,19 +80,206 @@
                 </div>
             
             </div>
-            <button id="btn_complete_subject" onclick="create_subject()">Create</button>
-            <button id="btn_edit_subject" style="display:none;margin-top: 10px;">Edit</button>
+            <button id="btn_complete_subject" onclick="create_subject()">Crear</button>
+            <button id="btn_edit_subject" style="display:none;margin-top: 10px;">Editar</button>
         </div>
-        
     </div>
     <div class="modal" id="modal_crear_nombre">
-        <div id="modal_contenido">
-            <label class="subtitle">Name</label>
-                <p>Write the name of the new Subject</p>
+        <div class="modal_contenido">
+            <label class="subtitle">Nombre</label>
+                <p>Escriba el nombre de la materia</p>
                 <div style="width: 100%; margin-bottom: 21px;"> 
                     <input type="text" id="new_subject_name_input">
                 </div>
-            <button id="btn_continue" onclick="continue_creation()">Create</button>
+            <button id="btn_continue" onclick="continue_creation()">Continuar</button>
+        </div>
+    </div>
+    <div class="modal" id="modal_resultados">
+        <div class="modal_contenido">
+            <label class="subtitle" id="res_title">Resultados</label>
+            <div id="tablas_res">
+                <div id="tabla_1_div" class="div_tabla_res">
+                    <table class="sections_table" >
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miercoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>Sabado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla_res_1">
+                            <tr turno="0">
+                                <td>Mañana</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="1">
+                                <td>Tarde</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="2">
+                                <td>Noche</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tabla_2_div" class="div_tabla_res">
+                    <table class="sections_table" >
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miercoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>Sabado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla_res_2">
+                            <tr turno="0">
+                                <td>Mañana</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="1">
+                                <td>Tarde</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="2">
+                                <td>Noche</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tabla_3_div" class="div_tabla_res">
+                    <table class="sections_table" >
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miercoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>Sabado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla_res_3">
+                            <tr turno="0">
+                                <td>Mañana</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="1">
+                                <td>Tarde</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="2">
+                                <td>Noche</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tabla_4_div" class="div_tabla_res">
+                    <table class="sections_table" >
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miercoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>Sabado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla_res_4">
+                            <tr turno="0">
+                                <td>Mañana</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="1">
+                                <td>Tarde</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                            <tr turno="2">
+                                <td>Noche</td>
+                                <td dia="1"><label></label></td>
+                                <td dia="2"><label></label></td>
+                                <td dia="3"><label></label></td>
+                                <td dia="4"><label></label></td>
+                                <td dia="5"><label></label></td>
+                                <td dia="6"><label></label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="botonera_res">
+                <button onclick="back_page()">Atras</button>
+                <label id="label_num_pag">Pagina</label>
+                <button onclick="next_page()">Adelante</button>
+            </div>
         </div>
     </div>
     <script src="main.js"></script>
