@@ -497,7 +497,7 @@ function back_page(){
 
 function next_page(){
 
-    if(pagina_actual<paginas_totales){
+    if(pagina_actual<paginas_totales-1){
         pagina_actual++
     }
     
