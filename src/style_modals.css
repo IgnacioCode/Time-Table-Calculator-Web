@@ -1,4 +1,4 @@
-#modal_crear_nombre{
+.modal{
     display: none;
     position: fixed;
     z-index: 1;
@@ -12,32 +12,51 @@
 
 #modal_contenido{
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    align-content: flex-start;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 15px; 
-    width: 70%;
+    width: 85%;
+    height: fit-content;
+}
+
+input{
+    width: 90%;
+    height: 25px;
+}
+
+th,td{
+    border: 1px solid #dddddd;
+    text-align: center;
 }
 
 .subtitle{
     width: 100%;
-    margin-bottom: 20px;
-    margin-left: 20px;
+    height: 30px;
+    margin-bottom: 5px;
     font-weight: 500;
     font-size: 30px;
 }
 
-th, td {
-    border: 1px solid #dddddd;
-    padding: 8px;
-    text-align: left;
-    height: 30px;
+.selector{
+    display: none;
+    width: 20%;
+    height: 150px;
+    background-color: #888;
 }
 
+.week_table{
+    width: 80%;
+    height: 150px;
+}
 
-th {
-    background-color: #f2f2f2;
+thead,tbody{
+    width: 70%;
+}
+
+#btn_complete_subject{
+    margin-top: 10px;
 }

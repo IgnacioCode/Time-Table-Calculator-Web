@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Time Table Calculator</title>
     
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_modals.css">
@@ -17,66 +17,82 @@
         <h1 class="header_title">Time Table Calculator</h1>
     </header>
     <div id="main_panel">
-        <div id="not_selected_subjects">
-            <div id="create_subject_button_div">
-                <button onclick="show_create_subject()" id="create_subject_button">Create Subject</button>
-            </div>
-            <div class="subject">
-                <label class="subject_name">AM1</label>
-                <div class="button_div">
-                    <button class="subject_button">Add</button>
-                    <button class="subject_button">Edit</button>
-                    <button class="subject_button">Delete</button>
-                </div>
-            </div>
+        <div id="create_subject_button_div" style="display: flex; justify-content: space-between; width: 100%; margin-top: 25px; margin-left: 20px; margin-right: 20px;">
+            <button onclick="show_create_subject()" class="top_ui_button" id="create_subject_button">Create Subject</button>
+            <button onclick="calculate_timetable()" class="top_ui_button" id="calculate_timetable">Calculate</button>
         </div>
+        <div id="not_selected_subjects"></div>
         <div id="divider"></div>
         <div id="selected_subjects"></div>
     </div>
     
-    <div id="modal_crear_nombre">
+    <div class="modal" id="modal_crear_comisiones">
         <div id="modal_contenido">
-            <label class="subtitle">Escriba un nombre</label>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miercoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                        <th>Sábado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <label class="subtitle">Sections</label>
+            <p>Write the section number on each slot for each different section for this subject. If there's more than one section in one slot, separate them with ","</p>
+            <div style="width: 100%;">  
+                <div class="week_table">
+                    <table class="sections_table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
+                            </tr>
+                        </thead>
+                        <tbody id="datos">
+                            <tr turno="0">
+                                <td>Morning</td>
+                                <td dia="1"><input type="text"></td>
+                                <td dia="2"><input type="text"></td>
+                                <td dia="3"><input type="text"></td>
+                                <td dia="4"><input type="text"></td>
+                                <td dia="5"><input type="text"></td>
+                                <td dia="6"><input type="text"></td>
+                            </tr>
+                            <tr turno="1">
+                                <td>Afternoon</td>
+                                <td dia="1"><input type="text"></td>
+                                <td dia="2"><input type="text"></td>
+                                <td dia="3"><input type="text"></td>
+                                <td dia="4"><input type="text"></td>
+                                <td dia="5"><input type="text"></td>
+                                <td dia="6"><input type="text"></td>
+                            </tr>
+                            <tr turno="2">
+                                <td>Evening</td>
+                                <td dia="1"><input type="text"></td>
+                                <td dia="2"><input type="text"></td>
+                                <td dia="3"><input type="text"></td>
+                                <td dia="4"><input type="text"></td>
+                                <td dia="5"><input type="text"></td>
+                                <td dia="6"><input type="text"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            
+            </div>
+            <button id="btn_complete_subject" onclick="create_subject()">Create</button>
+            <button id="btn_edit_subject" style="display:none;margin-top: 10px;">Edit</button>
+        </div>
+        
+    </div>
+    <div class="modal" id="modal_crear_nombre">
+        <div id="modal_contenido">
+            <label class="subtitle">Name</label>
+                <p>Write the name of the new Subject</p>
+                <div style="width: 100%; margin-bottom: 21px;"> 
+                    <input type="text" id="new_subject_name_input">
+                </div>
+            <button id="btn_continue" onclick="continue_creation()">Create</button>
         </div>
     </div>
     <script src="main.js"></script>
 </body>
 </html>
+
