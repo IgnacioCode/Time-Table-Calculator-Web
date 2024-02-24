@@ -86,6 +86,8 @@ thead,tbody{
 }
 
 .div_tabla_res{
+    display: flex;
+    justify-content: center;
     width: 50%;
     height: 47.5%;
     
@@ -93,4 +95,8 @@ thead,tbody{
 
 #res_title{
     margin-bottom: 20px;
+}
+
+.sections_table{
+    width: 95%;
 }
