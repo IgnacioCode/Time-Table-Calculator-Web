@@ -87,6 +87,11 @@ header{
     width: 30%;
 }
 
+.about_btn{
+    display: flex;
+    width: 5%;
+}
+
 .subject_button{
     margin: 5px;
     min-height: 30px;
