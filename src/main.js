@@ -431,22 +431,22 @@ function calculate_timetable(){
 
     pagina_actual = 0
     paginas_totales = Math.ceil(horarios_compatibles.length / 4);
-    label_num_pag.textContent = "Pagina " + (pagina_actual+1) + " de " + paginas_totales
+    label_num_pag.textContent = "Pagina " + (paginas_totales==0?0:pagina_actual+1) + " de " + paginas_totales
 
+    clean_res_table(tabla_res_1)
+    clean_res_table(tabla_res_2)
+    clean_res_table(tabla_res_3)
+    clean_res_table(tabla_res_4)
     if(horarios_compatibles[0]!=null){
-        clean_res_table(tabla_res_1)
         completa_tabla(tabla_res_1,horarios_compatibles[0])
     }
     if(horarios_compatibles[1]!=null){
-        clean_res_table(tabla_res_2)
         completa_tabla(tabla_res_2,horarios_compatibles[1])
     }
     if(horarios_compatibles[2]!=null){
-        clean_res_table(tabla_res_3)
         completa_tabla(tabla_res_3,horarios_compatibles[2])
     }
     if(horarios_compatibles[3]!=null){
-        clean_res_table(tabla_res_4)
         completa_tabla(tabla_res_4 ,horarios_compatibles[3])
     }
 }
