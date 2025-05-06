@@ -228,7 +228,7 @@ function update_subject_lists(nombre_materia){
         
         nuevos_botones.appendChild(boton_add)
 
-        boton_edit = document.createElement("button")
+        boton_edit = document.createElement("button")<
         boton_edit.className="subject_button"
         boton_edit.innerText="Editar"
         boton_edit.onclick = () =>{ editSubject(materia.nombre)}
