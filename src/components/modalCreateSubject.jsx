@@ -14,6 +14,7 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Turno, Comision } from "@/lib/model";
 import { X } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 const ItemTypes = { COMMISSION: "commission" };
 
@@ -169,7 +170,7 @@ export function CreateSubjectModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[1280px] max-h-[90vh] flex overflow-hidden">
+      <DialogContent className="sm:max-w-[70vw] max-h-[90vh] flex overflow-hidden">
         <DndProvider backend={HTML5Backend}>
           <div className="w-1/4 p-4 border-r overflow-y-auto">
             <h3 className="font-semibold mb-2">Comisiones</h3>
@@ -193,8 +194,8 @@ export function CreateSubjectModal({
 
           <div className="w-3/4 p-4 overflow-auto">
             <DialogHeader>
-              <DialogTitle>Asignar turnos</DialogTitle>
-              <DialogDescription>
+              <DialogTitle asChild><Label>Asignar turnos</Label></DialogTitle>
+              <DialogDescription className={"mb-2"}>
                 Arrastra la comisión desde la izquierda a la celda de día y franja horaria.
               </DialogDescription>
             </DialogHeader>
