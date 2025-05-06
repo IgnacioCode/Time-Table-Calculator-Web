@@ -1,25 +1,36 @@
-# Time Table Calculator
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Una pequeña aplicacion web para poder calcular todas las posibles combinaciones de horarios disponibles para materias universitarias. 
+## Getting Started
 
-Hecha integramente con vanilla Javascript y css para mantener la simplicidad de la misma.
+First, run the development server:
 
-Para acceder a la misma esta hecho un deploy en vercel sobre este repositorio. 
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-Se accede [aqui](https://time-table-calculator-web.vercel.app/)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Como usarla
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-Primero debemos tener definido que materias nos interesaria poder cursar. Luego, haremos click en el boton de "Crear Materia", ingresaremos el nombre y nos aparecera una tabla de comisiones.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-En dicha tabla debemos escribir los numeros de comisiones que existan en cada horario y dia. El orden de las comisiones no afecta al resultado. Si existe mas de 1 comision en un mismo horario, deben ingresarse los numeros pero separados por comas, quedando de la siguiente forma "1,2,3,4".
+## Learn More
 
-Una vez que completemos las comisiones, podremos completar esta materia y proceder a cargar la siguiente.
+To learn more about Next.js, take a look at the following resources:
 
-Una vez cargadas todas las materias que nos interesen, debemos darle al boton "Añadir" a aquellas que querramos tener en cuenta para el calculo de los posibles horarios. Al hacer click, nos apareceran todos los horarios que permitan cursar todas las materias seleccionadas. 
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-**Si no existen horarios posibles, apareceran los 4 cuadros vacios.**
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Datos Guardados
+## Deploy on Vercel
 
-Todas las materias que ingresemos a la pagina quedan guardados dentro de la cache del navegador para dicha pagina web, por lo que si accedemos desde un nuevo navegador no podremos visualizar las materias que hayamos cargado previamente.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
